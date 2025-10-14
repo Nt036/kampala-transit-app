@@ -90,6 +90,17 @@
       color: var(--blue);
     }
 
+     .back-btn {
+      margin-top: 15px;
+      display: inline-block;
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .back-btn i {
+      margin-right: 5px;
+    }
+
     @media (max-width: 768px) {
       .menu-toggle {
         display: block;
@@ -147,7 +158,7 @@
       </div>
     </div>
   </div>
-
+<a href="home.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
   <script>
     function toggleMenu() {
       document.getElementById('navLinks').classList.toggle('active');
