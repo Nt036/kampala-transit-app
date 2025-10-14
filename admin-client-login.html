@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <style>
+    :root {
+      --blue: #2E4485;
+      --yellow: #F1A732;
+      --light: #f9f9f9;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--light);
+      color: var(--blue);
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 60px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--blue);
+    }
+
+    label {
+      font-weight: 500;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 18px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .checkboxes {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+    }
+
+    .form-section {
+      display: none;
+    }
+
+    button {
+      width: 100%;
+      background-color: var(--blue);
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1f3366;
+    }
+
+    .toggle-password {
+      position: relative;
+      float: right;
+      margin-top: -40px;
+      margin-right: 10px;
+      cursor: pointer;
+      color: var(--yellow);
+    }
+
+    .message {
+      color: red;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        margin: 30px 15px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>🔐 User Login</h2>
+
+    <div class="checkboxes">
+      <label><input type="radio" name="role" value="client" /> Client</label>
+      <label><input type="radio" name="role" value="admin" /> Admin</label>
+    </div>
+
+    <!-- Client Login -->
+    <form id="clientLoginForm" class="form-section">
+      <label>Email or Phone</label>
+      <input type="text" id="clientUser" required />
+
+      <label>Password</label>
+      <input type="password" id="clientPass" required />
+      <span class="toggle-password" onclick="togglePassword('clientPass')">👁</span>
+
+      <button type="submit">Login as Client</button>
+      <p class="message" id="clientError"></p>
+    </form>
+
+    <!-- Admin Login -->
+    <form id="adminLoginForm" class="form-section">
+      <label>Email</label>
+      <input type="email" id="adminEmail" required />
+
+      <label>Password</label>
+      <input type="password" id="adminPass" required />
+      <span class="toggle-password" onclick="togglePassword('adminPass')">👁</span>
+
+      <button type="submit">Login as Admin</button>
+      <p class="message" id="adminError"></p>
+    </form>
+  </div>
+
+  <script>
+    const roleRadios = document.querySelectorAll('input[name="role"]');
+    const clientForm = document.getElementById("clientLoginForm");
+    const adminForm = document.getElementById("adminLoginForm");
+
+    roleRadios.forEach(radio => {
+      radio.addEventListener("change", function() {
+        if (this.value === "client") {
+          clientForm.style.display = "block";
+          adminForm.style.display = "none";
+        } else {
+          clientForm.style.display = "none";
+          adminForm.style.display = "block";
+        }
+      });
+    });
+
+    function togglePassword(id) {
+      const input = document.getElementById(id);
+      input.type = input.type === "password" ? "text" : "password";
+    }
+
+    // Handle Client Login with console logging and redirect
+    clientForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const userInput = document.getElementById("clientUser").value.trim();
+      const pass = document.getElementById("clientPass").value.trim();
+      
+      // Log data to console
+      console.log("Client Login Attempt:");
+      console.log("Email or Phone:", userInput);
+      console.log("Password:", pass);
+      console.log("------------------------");
+
+      // Show success message
+      alert("✅ Login successful! Redirecting to dashboard...");
+
+      // Redirect user to the dashboard
+      window.location.href = "client-dashboard.html";
+    });
+
+    // Handle Admin Login with console logging and redirect
+    adminForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const email = document.getElementById("adminEmail").value.trim();
+      const pass = document.getElementById("adminPass").value.trim();
+
+      // Log data to console
+      console.log("Admin Login Attempt:");
+      console.log("Email:", email);
+      console.log("Password:", pass);
+      console.log("------------------------");
+      
+      // Show success message
+      alert("✅ Login successful! Redirecting to admin dashboard...");
+      
+      // Redirect user to the admin dashboard
+      window.location.href = "admin-dashboard.html";
+    });
+  </script>
+
+</body>
+</html>

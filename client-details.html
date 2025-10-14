@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Client Details</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #f9f9f9;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .client-container {
+      max-width: 400px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-top: 5px solid #2E4485;
+    }
+    .client-container h2 {
+      text-align: center;
+      color: #2E4485;
+      margin-bottom: 20px;
+    }
+    .client-container input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .location-field {
+      display: flex;
+      align-items: center;
+    }
+    .location-field input {
+      flex: 1;
+    }
+    .location-btn {
+      background: #2E4485;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-left: 8px;
+      cursor: pointer;
+    }
+    .btn-submit {
+      width: 100%;
+      background-color: #2E4485;
+      color: #fff;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    .btn-submit:hover {
+      background-color: #1f3263;
+    }
+  </style>
+</head>
+<body>
+
+<div class="client-container">
+  <h2>Client Information</h2>
+  <form id="clientForm">
+    <input type="text" id="clientName" placeholder="Full Name" required />
+    <input type="tel" id="clientPhone" placeholder="Phone Number" required />
+
+    <div class="location-field">
+      <input type="text" id="pickupLocation" placeholder="Pickup Location" required />
+      <button type="button" class="location-btn" onclick="fillCurrentLocation()">📍</button>
+    </div>
+
+    <input type="text" id="dropoffLocation" placeholder="Dropoff Location" required />
+    <button type="submit" class="btn-submit">Continue</button>
+  </form>
+</div>
+
+<script>
+    // Auto-fill name and phone from localStorage login info (simulate backend data)
+  window.addEventListener("DOMContentLoaded", () => {
+    const storedName = localStorage.getItem("loggedInName");
+    const storedPhone = localStorage.getItem("loggedInPhone");
+
+    if (storedName) document.getElementById("clientName").value = storedName;
+    if (storedPhone) document.getElementById("clientPhone").value = storedPhone;
+  });
+
+  // Fill pickup location using geolocation API
+  function fillCurrentLocation() {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser.");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+
+        try {
+          // Reverse geocode using OpenStreetMap API
+          const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=latitude   lon={longitude}`);
+          const data = await response.json();
+          const address = data.display_name;
+          document.getElementById("pickupLocation").value = address;
+          console.log("Location filled:", address);
+        } catch (error) {
+          console.error("Error fetching location:", error);
+          alert("Could not fetch location address.");
+        }
+      },
+      (error) => {
+        alert("Unable to retrieve your location.");
+        console.error(error);
+      }
+    );
+  }
+
+  // Handle form submission
+  document.getElementById("clientForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("clientName").value.trim();
+    const phone = document.getElementById("clientPhone").value.trim();
+    const pickup = document.getElementById("pickupLocation").value.trim();
+    const dropoff = document.getElementById("dropoffLocation").value.trim();
+
+    if (!name || !phone || !pickup || !dropoff) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    // Save to localStorage for summary
+    localStorage.setItem("clientName", name);
+    localStorage.setItem("clientPhone", phone);
+    localStorage.setItem("pickupLocation", pickup);
+    localStorage.setItem("dropoffLocation", dropoff);
+
+    // Log everything
+    console.log("Client Data Submitted:", { name, phone, pickup, dropoff });
+
+    // Navigate to summary (you can replace this with a fetch call to backend)
+    window.location.href = "Trip-summary.html";
+  });
+</script>
+
+</body>
+</html>
+
+

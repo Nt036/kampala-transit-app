@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard | Kampala Transit</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    :root {
+      --blue: #2E4485;
+      --yellow: #F1A732;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6fa;
+    }
+
+    nav {
+      background-color: var(--blue);
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: var(--yellow);
+    }
+
+    .dashboard {
+      padding: 30px 20px;
+    }
+
+    .dashboard h2 {
+      color: var(--blue);
+      margin-bottom: 20px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-left: 5px solid var(--yellow);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      border-radius: 8px;
+      transition: 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: var(--blue);
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        margin-top: 10px;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 10px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Admin Dashboard</div>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <i class="fas fa-bars"></i>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="admin-clients.html"><i class="fas fa-users"></i> Clients</a>
+      <a href="admin-reports.html"><i class="fas fa-flag"></i> Reports</a>
+      <a href="admin-history.html"><i class="fas fa-history"></i> History</a>
+      <a href="rides-history.html"><i class="fas fa-car"></i> Rides History</a>
+    </div>
+  </nav>
+
+  <div class="dashboard">
+    <h2>Welcome, Admin</h2>
+    <div class="cards">
+      <div class="card">
+        <h3><i class="fas fa-users"></i> Manage Clients</h3>
+        <p>View, update or remove client profiles.</p>
+      </div>
+      <div class="card">
+        <h3><i class="fas fa-flag"></i> Review Reports</h3>
+        <p>Handle incident reports submitted by users.</p>
+      </div>
+      <div class="card">
+        <h3><i class="fas fa-history"></i> Login History</h3>
+        <p>Track login history of all users.</p>
+      </div>
+      <div class="card">
+        <h3><i class="fas fa-car"></i> Ride Logs</h3>
+        <p>Access full ride history and payment logs.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('active');
+    }
+  </script>
+
+</body>
+</html>

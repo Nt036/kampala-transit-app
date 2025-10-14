@@ -1,0 +1,169 @@
+Trip summary
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trip Summary</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #2E4485;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 20px;
+      font-weight: bold;
+    }
+
+    .summary-container {
+      max-width: 500px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 30px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-top: 5px solid #2E4485;
+    }
+
+    h2 {
+      text-align: center;
+      color: #2E4485;
+      margin-bottom: 25px;
+    }
+
+    .summary-item {
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+
+    .summary-item span {
+      font-weight: 500;
+      color: #2E4485;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .btn.confirm {
+      background-color: #2E4485;
+    }
+
+    .btn.reset {
+      background-color: #F1A732;
+      color: #2E4485;
+    }
+
+    .btn.reset:hover {
+      background-color: #d68f20;
+    }
+
+    /* Arrows */
+    .nav-arrows {
+      display: flex;
+      justify-content: space-between;
+      max-width: 500px;
+      margin: 20px auto 0;
+      padding: 0 20px;
+    }
+
+    .arrow {
+      font-size: 16px;
+      font-weight: bold;
+      color: #2E4485;
+      background-color: #F1A732;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .arrow:hover {
+      background-color: #d68f20;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    Kampala Transit
+    <div></div>
+  </div>
+
+  <!-- Summary Content -->
+  <div class="summary-container">
+    <h2>Trip Summary</h2>
+    <div class="summary-item"><strong>Ride Type:</strong> <span id="rideType">-</span></div>
+<div class="summary-item"><strong>Vehicle:</strong> <span id="vehicleType">-</span></div>
+    <div class="summary-item"><strong>Client Name:</strong> <span id="clientName">-</span></div>
+    <div class="summary-item"><strong>Phone:</strong> <span id="clientPhone">-</span></div>
+    <div class="summary-item"><strong>Pickup:</strong> <span id="pickupLocation">-</span></div>
+    <div class="summary-item"><strong>Dropoff:</strong> <span id="dropoffLocation">-</span></div>
+
+    <div class="btn-group">
+      <button class="btn confirm" onclick="confirmTrip()">Confirm</button>
+      <button class="btn reset" onclick="resetTrip()">Reset</button>
+    </div>
+  </div>
+
+  <!-- Navigation Arrows -->
+  <div class="nav-arrows">
+    <span class="arrow" onclick="goBack()">← Back</span>
+    <span class="arrow" onclick="goHome()">🏠 Home</span>
+  </div>
+
+  <script>
+    // Load values from localStorage
+    document.getElementById("rideType").textContent = localStorage.getItem("rideType") || "-";
+    document.getElementById("vehicleType").textContent = localStorage.getItem("vehicleType") || "-";
+    document.getElementById("clientName").textContent = localStorage.getItem("clientName") || "-";
+    document.getElementById("clientPhone").textContent = localStorage.getItem("clientPhone") || "-";
+document.getElementById("pickupLocation").textContent = localStorage.getItem("pickupLocation") || "-";
+    document.getElementById("dropoffLocation").textContent = localStorage.getItem("dropoffLocation") || "-";
+
+    function confirmTrip() {
+      console.log("Trip confirmed!");
+      alert("Trip confirmed! Thank you for using Kampala Transit.");
+      localStorage.clear();
+    }
+
+    function resetTrip() {
+      localStorage.clear();
+      alert("Trip reset.");
+      window.location.href = "Choose ride.html";
+    }
+
+    function goBack() {
+      window.history.back();
+    }
+
+    function goHome() {
+      window.location.href = "home.html";
+    }
+  </script>
+
+</body>
+</html>

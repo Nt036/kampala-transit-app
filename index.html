@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kampala Transit | cover page</title>
+  <style>
+    :root {
+      --blue: #2E4485;
+      --yellow: #F1A732;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: var(--blue) url('bg.jpg') no-repeat center center / cover;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .logo-text {
+      font-size: 2.5em;
+      font-weight: bold;
+      color: var(--yellow);
+      margin-bottom: 20px;
+      animation: fadeInScale 2s ease-in-out infinite alternate;
+    }
+
+    .spinner {
+      border: 8px solid rgba(255, 255, 255, 0.2);
+border-top: 8px solid var(--yellow);
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeInScale {
+      0% { opacity: 0.6; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1.1); }
+    }
+
+    p {
+      color: white;
+      font-size: 16px;
+      opacity: 0.8;
+    }
+
+    @media (max-width: 600px) {
+      .logo-text {
+        font-size: 1.8em;
+      }
+
+      .spinner {
+        width: 50px;
+        height: 50px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo-text">Kampala Transit</div>
+  <div class="spinner"></div>
+  <p>Loading, please wait...</p>
+
+  <script>
+    setTimeout(() => {
+      window.location.href = "home.html";
+    }, 2000);
+  </script>
+
+</body>
+</html>
+

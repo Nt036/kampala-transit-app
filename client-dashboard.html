@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Client Dashboard | Kampala Transit</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    :root {
+      --blue: #2E4485;
+      --yellow: #F1A732;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6fa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      color: var(--blue);
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .dashboard {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .btn {
+      padding: 15px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      background-color: var(--blue);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+    }
+
+    .btn i {
+      margin-right: 10px;
+    }
+
+    .btn:hover {
+      background-color: var(--yellow);
+      color: #000;
+    }
+
+     .back-btn {
+      margin-top: 15px;
+      display: inline-block;
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .back-btn i {
+      margin-right: 5px;
+    }
+
+    @media (max-width: 500px) {
+      .btn {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Welcome to Kampala Transit</h1>
+
+  <div class="dashboard">
+    <button class="btn" onclick="navigateTo('choose-ride.html', 'Book Ride')">
+      <i class="fas fa-car-side"></i> Book a Ride
+    </button>
+    <button class="btn" onclick="navigateTo('client-report.html', 'Report Incident')">
+      <i class="fas fa-exclamation-triangle"></i> Report Incident
+    </button>
+  </div>
+
+  <a href="home.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+
+  <script>
+    function navigateTo(page, action) {
+      const activity = {
+        action: action,
+        role: 'client',
+        time: new Date().toLocaleString()
+      };
+      
+      // Log the activity to the console
+      console.log("Client Activity:", activity);
+
+      // Redirect to the specified page
+      window.location.href = page;
+    }
+  </script>
+
+</body>
+</html>

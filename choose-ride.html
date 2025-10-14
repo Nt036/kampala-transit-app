@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Choose Your Ride</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    .ride-container {
+      max-width: 500px;
+      margin: 60px auto;
+      background: #fff;
+      padding: 30px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-top: 5px solid #2E4485;
+    }
+
+    h2 {
+      text-align: center;
+      color: #2E4485;
+      margin-bottom: 25px;
+    }
+
+    .ride-option {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      background-color: #f0f0f0;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      cursor: pointer;
+      transition: border 0.3s, background 0.3s;
+    }
+
+    .ride-option input {
+      display: none;
+}
+
+    .ride-option:hover {
+      background-color: #eaeaea;
+    }
+
+    .ride-option.selected {
+      border-color: #F1A732;
+      background-color: #fff7eb;
+    }
+
+    .ride-icon {
+      font-size: 28px;
+      color: #2E4485;
+    }
+
+    .ride-label {
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 12px;
+      background-color: #2E4485;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .btn-submit:hover {
+      background-color: #1e3260;
+    }
+
+    @media (max-width: 500px) {
+      .ride-label {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ride-container">
+    <h2>Choose Your Ride</h2>
+    <form id="rideForm">
+
+      <label class="ride-option" onclick="selectRide(this)">
+        <input type="radio" name="ride" value="Taxi" required />
+        <span class="ride-icon">🚕</span>
+        <span class="ride-label">Taxi</span>
+      </label>
+
+      <label class="ride-option" onclick="selectRide(this)">
+        <input type="radio" name="ride" value="Boda" />
+        <span class="ride-icon">🏍️</span>
+        <span class="ride-label">Boda</span>
+      </label>
+<label class="ride-option" onclick="selectRide(this)">
+        <input type="radio" name="ride" value="Special Hire" />
+        <span class="ride-icon">🚗</span>
+        <span class="ride-label">Special Hire</span>
+      </label>
+
+      <button type="submit" class="btn-submit">Continue</button>
+    </form>
+  </div>
+
+  <script>
+    function selectRide(label) {
+      document.querySelectorAll('.ride-option').forEach(option => {
+        option.classList.remove('selected');
+      });
+      label.classList.add('selected');
+      label.querySelector('input').checked = true;
+    }
+
+    document.getElementById("rideForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const selectedRide = document.querySelector('input[name="ride"]:checked')?.value;
+      if (!selectedRide) {
+        alert("Please choose a ride.");
+        return;
+      }
+
+      localStorage.setItem("rideType", selectedRide);
+      console.log("Selected Ride:", selectedRide);
+
+      // Go to next page
+      window.location.href = "client-details.html";
+    });
+  </script>
+
+</body>
+</html>

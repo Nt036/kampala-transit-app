@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Sign Up | Kampala Transit</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    :root {
+      --blue: #2E4485;
+      --yellow: #F1A732;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 25px 30px;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .container h2 {
+      color: var(--blue);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .icon-top {
+      text-align: center;
+      font-size: 48px;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    .form-group label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: var(--blue);
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      display: none;
+      margin-top: 5px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background-color: var(--blue);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: var(--yellow);
+      color: #111;
+    }
+
+    
+    @media (max-width: 500px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="icon-top">
+      <i class="fas fa-user-shield"></i>
+    </div>
+    <h2>Admin Sign-Up</h2>
+
+    <form id="adminSignupForm">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" required />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required />
+      </div>
+
+      <div class="form-group">
+        <label for="adminCode">Admin Code</label>
+        <input type="text" id="adminCode" maxlength="20" required />
+        <div class="error" id="codeError">Invalid Admin Code</div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" required />
+        <i class="fas fa-eye toggle-password" onclick="togglePassword('password')"></i>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" required />
+        <i class="fas fa-eye toggle-password" onclick="togglePassword('confirmPassword')"></i>
+        <div class="error" id="matchError">Passwords do not match</div>
+      </div>
+
+      <button class="btn" type="submit">Sign Up</button>
+    </form>
+  </div>
+
+  <script>
+    const validAdminCodes = [
+      "ADM1N-X2A9B7ZQ",
+      "X7Y2B-ADMNC0DE",
+      "KCYB3R-S3CUR3D",
+      "ADMN-123XY9QZL",
+      "KA456B-CYBER01"
+    ];
+
+    function togglePassword(id) {
+      const input = document.getElementById(id);
+      input.type = input.type === "password" ? "text" : "password";
+    }
+
+    document.getElementById("adminSignupForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const code = document.getElementById("adminCode").value.trim();
+      const pass = document.getElementById("password").value;
+      const confirm = document.getElementById("confirmPassword").value;
+      const codeError = document.getElementById("codeError");
+      const matchError = document.getElementById("matchError");
+
+      // Reset errors
+      codeError.style.display = "none";
+      matchError.style.display = "none";
+
+      // Validation logic
+      if (!validAdminCodes.includes(code)) {
+        codeError.style.display = "block";
+        return;
+      }
+
+      if (pass !== confirm) {
+        matchError.style.display = "block";
+        return;
+      }
+
+      // Action: Log to console and redirect
+      const adminsData = {
+        role: "admin",
+        name,
+        email,
+        adminCode: code,
+        password: pass
+      };
+
+      // Log data to the console
+      console.log("Admin sign-up data:", adminsData);
+
+      // Show success message and redirect
+      alert("✅ Sign-up successful! Redirecting to login page...");
+      window.location.href = "admin-client-login.html";
+    });
+  </script>
+
+</body>
+</html>

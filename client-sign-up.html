@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Client Sign Up</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    :root {
+      --blue: #2E4485;
+      --yellow: #F1A732;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 25px 30px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .container h2 {
+      color: var(--blue);
+      text-align: center;
+    }
+
+    .icon-top {
+      text-align: center;
+      font-size: 48px;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: var(--blue);
+    }
+
+    .btn {
+      width: 100%;
+      background: var(--blue);
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background-color: var(--yellow);
+      color: black;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      display: none;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="icon-top">
+      <i class="fas fa-user"></i>
+    </div>
+    <h2>Client Sign-Up</h2>
+    <form id="clientSignupForm">
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" required />
+      </div>
+
+      <div class="form-group">
+        <label for="contact">Email or Phone</label>
+        <input type="text" id="contact" required />
+        <div class="error" id="contactError">Enter a valid email or phone number</div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" required />
+        <i class="fas fa-eye toggle-password" onclick="togglePassword('password')"></i>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" required />
+        <i class="fas fa-eye toggle-password" onclick="togglePassword('confirmPassword')"></i>
+        <div class="error" id="passwordError">Passwords do not match</div>
+      </div>
+
+      <button type="submit" class="btn">Sign Up</button>
+    </form>
+  </div>
+
+  <script>
+    function togglePassword(id) {
+      const input = document.getElementById(id);
+      input.type = input.type === "password" ? "text" : "password";
+    }
+
+    function isValidEmailOrPhone(value) {
+      const emailRegex = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      // This phone regex looks suspicious; using a more generic one for demonstration.
+      // Phone number regex can vary widely based on country.
+      const phoneRegex = /^\d{9,15}$/; 
+      return emailRegex.test(value) || phoneRegex.test(value);
+    }
+
+    document.getElementById("clientSignupForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const fullName = document.getElementById("fullName").value.trim();
+      const contact = document.getElementById("contact").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      const contactError = document.getElementById("contactError");
+      const passwordError = document.getElementById("passwordError");
+
+      contactError.style.display = "none";
+      passwordError.style.display = "none";
+
+      if (!isValidEmailOrPhone(contact)) {
+        contactError.style.display = "block";
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        passwordError.style.display = "block";
+        return;
+      }
+
+      const timestamp = new Date().toLocaleString();
+
+      const clientData = {
+        role: "client",
+        name: fullName,
+        contact: contact,
+        password: password,
+        signedUpAt: timestamp
+      };
+
+      // Log data to the console instead of saving to localStorage
+      console.log("Client signed up:", clientData);
+
+      // Display a success message
+      alert("✅ Sign-up successful! Redirecting to login page...");
+      
+      // Redirect to the login page
+      window.location.href = "admin-client-login.html";
+    });
+  </script>
+</body>
+</html>

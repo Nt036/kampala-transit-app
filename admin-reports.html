@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin - Reports</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    :root {
+      --blue: #2E4485;
+      --yellow: #F1A732;
+      --light: #f4f6fa;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--light);
+      color: #333;
+      padding: 20px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .header h2 {
+      color: var(--blue);
+    }
+    .back-btn {
+      background: var(--yellow);
+      color: var(--blue);
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .back-btn:hover {
+      background: #d89b2a;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background: var(--blue);
+      color: white;
+    }
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      th {
+        position: sticky;
+        top: 0;
+      }
+      td {
+        padding: 10px;
+        border-bottom: none;
+      }
+      td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        color: var(--blue);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h2><i class="fas fa-flag"></i> Client Reports</h2>
+    <button class="back-btn" onclick="window.location.href='admin-dashboard.html'">← Back to Dashboard</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Client</th>
+        <th>Report Type</th>
+        <th>Message</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody id="reportsTableBody"></tbody>
+  </table>
+
+  <script>
+    function loadReports() {const tbody = document.getElementById("reportsTableBody");
+      let found = false;
+
+      for (let key in localStorage) {
+        if (localStorage.hasOwnProperty(key) && key.startsWith("report_")) {
+          try {
+            const report = JSON.parse(localStorage.getItem(key));
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td data-label="Client">report.client || 'N/A'</td>
+              <td data-label="Report Type">{report.type || 'N/A'}</td>
+              <td data-label="Message">report.message || 'N/A'</td>
+              <td data-label="Date">{report.date || ''}</td>
+            `;
+            tbody.appendChild(row);
+            found = true;
+          } catch (e) {
+            console.warn("Error parsing report:", key);
+          }
+        }
+      }
+
+      if (!found) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td colspan="4">No reports available.</td>`;
+        tbody.appendChild(tr);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadReports);
+  </script>
+
+</body>
+</html>

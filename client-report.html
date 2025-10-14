@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Client Report Form</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    :root {
+      --blue: #2E4485;
+      --yellow: #F1A732;
+      --light: #f9f9f9;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: var(--light);
+      color: #333;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--blue);
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    input[type="file"] {
+      padding: 8px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: var(--blue);
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1c2f63;
+    }
+
+    .back-btn {
+      margin-top: 15px;
+      display: inline-block;
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .back-btn i {
+      margin-right: 5px;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        margin: 20px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2><i class="fas fa-flag"></i> Report Incident</h2>
+    <form id="reportForm">
+      <div class="form-group">
+        <label for="name">Full Name *</label>
+        <input type="text" id="name" required />
+      </div>
+      <div class="form-group">
+        <label for="contact">Email or Phone *</label>
+        <input type="text" id="contact" required />
+      </div>
+      <div class="form-group">
+        <label for="message">Report Message *</label>
+        <textarea id="message" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="video">Upload Video (optional)</label>
+        <input type="file" id="video" accept="video/*" />
+      </div>
+      <button type="submit">Submit Report</button>
+    </form>
+
+    <a href="client-dashboard.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+  </div>
+
+  <script>
+    document.getElementById("reportForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const contact = document.getElementById("contact").value.trim();
+      const message = document.getElementById("message").value.trim();
+      const videoInput = document.getElementById("video");
+      const timestamp = new Date().toLocaleString();
+
+      if (!name || !contact || !message) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+      let videoName = "";
+      if (videoInput.files.length > 0) {
+        videoName = videoInput.files[0].name;
+      }
+
+      const report = {
+        name,
+        contact,
+        message,
+        video: videoName,
+        timestamp
+      };
+
+      // Log the report data to the console
+      console.log("Report Submitted:", report);
+
+      // Reset form (optional)
+      document.getElementById("reportForm").reset();
+      
+      // Redirect to the thank-you page
+      window.location.href = "thank-you.html";
+    });
+  </script>
+</body>
+</html>
